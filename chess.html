@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <title>chess board</title>
+  <style>
+    body{
+      font-family: 'Poppins', sans-serif;
+      top: 0;
+      left: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      height: 97vh;
+    }
+    table{
+      border:2px solid black;
+      width: 600px;
+      height: 600px;
+      border-collapse: collapse;
+    }
+    tr{
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 100%;
+      height: 75px;
+
+    }
+    td{
+      width: 75px;
+      height: 75px;
+      border:1px solid black;
+      box-sizing: border-box;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    span{
+      font-size: 50px;
+    }
+    .green{
+      background-color: green;
+
+    }
+    .white{
+      background-color: rgb(188, 212, 173);
+    }
+  </style>
+</head>
+<body>
+
+  <h1>chess board</h1>
+  <table id="board"></table>
+
+    <script>
+      const pieces = [
+      ['♜', '♞', '♝', '♛', '♚', '♝', '♞', '♜'],
+      ['♟', '♟', '♟', '♟', '♟', '♟', '♟', '♟'],
+      [], [], [], [],
+      ['♟', '♟', '♟', '♟', '♟', '♟', '♟', '♟'],
+      ['♜', '♞', '♝', '♛', '♚', '♝', '♞', '♜'],
+      ];
+      let table = document.getElementById("board");
+      let tr;
+      let td;
+      let icon;
+
+
+      for(i = 0 ; i<8; i++){
+        tr = document.createElement("tr");
+        table.appendChild(tr);
+        for (x = 0 ; x<8 ; x++){
+          td = document.createElement("td");
+          tr.appendChild(td)
+          
+          
+          if((x+i)%2==0){
+            td.classList.add("green");
+          }
+          else{
+            td.classList.add("white");
+          }
+
+
+          if(pieces[i][x]){
+            icon = document.createElement("span");
+            icon.textContent=pieces[i][x];
+            td.appendChild(icon);
+            if(i>=6){
+              icon.style.color="white";
+              icon.style.webkitTextStroke = '1px black';
+              //webkit text stroke est utiliser pour placer une border pour le texte(pas le block du text le texte lui meme)
+            }
+          }
+        }
+      }
+    </script>
+</body>
+</html>

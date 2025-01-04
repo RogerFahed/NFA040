@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>To-Do List</title>
+<style>
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f4f4f9;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  margin: 0;
+}
+
+.todo-container {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  width: 300px;
+  text-align: center;
+}
+
+h1 {
+  color: #333;
+}
+
+.todo-form {
+  margin-bottom: 20px;
+}
+
+#inp {
+  width: 70%;
+  padding: 10px;
+  border-radius: 5px;
+  font-size: 16px;
+}
+
+button {
+  padding: 10px 15px;
+  background-color: #5cb85c;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  margin-left: 10px;
+  text-decoration: none;
+}
+
+ul {
+  list-style: none;
+  padding: 0;
+}
+
+li {
+  background-color: #f9f9f9;
+  padding: 10px;
+  margin: 10px 0;
+  border-radius: 5px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+
+
+button.delete {
+  background-color: #d9534f;
+  font-size: 14px;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+}
+
+button.delete:hover {
+  background-color: #c9302c;
+}
+
+</style>
+</head>
+<body>
+  <div class="todo-container">
+    <h1>To-Do List</h1>
+    <div class="todo-form">
+      <input type="text" id="inp" placeholder="Add a new task" />
+      <br><br>
+      <button onclick="addTask()">Add Task</button>
+    </div>
+    <ul id="taskList">
+    </ul>
+  </div>
+
+  <script>
+    let inp = document.getElementById('inp');
+    let ul = document.getElementById('taskList');
+    function addTask(){
+        if(String(inp.value).length>0){
+            let li = document.createElement('li');
+            let p = document.createElement('p');
+            p.innerHTML=inp.value; 
+            ul.appendChild(li);
+            li.appendChild(p);
+            let button = document.createElement('button');
+            button.innerHTML="done";
+            button.setAttribute('onclick', 'done(this)');
+            li.appendChild(button);
+        }
+        else{
+            alert("please enter a valid task");
+            return false;
+        }
+    }
+    function done(button){
+        let prevSibling = button.previousElementSibling;
+        prevSibling.style.textDecoration = "line-through";
+        button.disabled = true;
+        button.innerHTML = 'Completed';
+        button.style.textDecoration = "none";
+        button.style.backgroundColor = "gray";
+    }
+  </script>
+</body>
+</html>

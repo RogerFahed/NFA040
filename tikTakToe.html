@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>tik-tak-toe</title>
+    <style>
+        body{
+            font-family: Arial, Helvetica, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height:97vh;
+            flex-direction: column;
+            background-color: rgb(39, 39, 39);
+            color:white;
+        }
+        table{
+            height: 300px;
+            width: 300px;
+            border-collapse: collapse;
+        }
+        td{
+            width: 100px;
+            height: 100px;
+            border:2px solid rgb(255, 255, 255);
+            box-sizing: border-box;
+            font-size: 30px;
+
+        }
+        .top{
+            border-top: 0px;
+        }
+        .left{
+            border-left: 0px;
+        }
+        .right{
+            border-right: 0px;
+        }
+        .bottom{
+            border-bottom: 0px;
+        }
+        div{
+            display: flex;
+            flex-direction: row;
+            justify-content: space-around;
+            width: 400px;
+        }
+        button{
+            border-radius: 30px;
+            color:white;
+            border: 2px solid rgb(0, 0, 0);
+            width: 130px;
+            height: 30px;
+            transition: 0.5s ease;
+            background-color: black;
+        }
+        button:hover{
+            color: black;
+            background-color: white;
+            border: 2px solid rgb(255, 255, 255);
+
+        }
+    </style>
+</head>
+
+<bodY>
+    <table>
+        <tr>
+            <td class="top left" align="center" onclick="play(this)"></td>
+            <td class="top" align="center" onclick="play(this)"></td>
+            <td class="top right" align="center" onclick="play(this)"></td>
+        </tr>
+        <tr>
+            <td class="left" align="center" onclick="play(this)"></td>
+            <td align="center" onclick="play(this)"></td>
+            <td class="right" align="center" onclick="play(this)"></td>
+        </tr>
+        <tr>
+            <td  class="bottom left" align="center" onclick="play(this)"></td>
+            <td class="bottom" align="center" onclick="play(this)"></td>
+            <td class="bottom right" align="center" onclick="play(this)"></td>
+        </tr>
+    </table>
+    <div>
+        <h3 id="xName"></h3>
+        <h3 id="oName"></h3>
+    </div>
+    <div>
+        <button onclick="resetScore()">reset Score</button>
+        <button onclick="switchTeam()">switch Team</button>
+    </div>
+
+    <script>
+
+        let count = 0;
+        let xP = 0;
+        let oP = 0;
+        let temp;
+        let table = document.querySelectorAll("tr");
+        let tr;
+        let arr = [
+                ['','',''],
+                ['','',''],
+                ['','',''],
+            ];
+        function updateScore(){
+            let xName = document.getElementById("xName").innerHTML="X player: "+xP;
+            let oName = document.getElementById("oName").innerHTML="O player: "+oP;
+        }
+        setInterval(updateScore,1000);
+
+        function play(place){
+            if(place.innerHTML.length>0){
+               return false; 
+            }
+            else{
+                if(count%2==0){
+                    place.innerHTML="X";
+                    count++;
+                }
+                else{
+                    place.innerHTML="O";
+                    count++
+                }
+            }
+
+            for(i = 0 ; i<table.length;i++){
+                tr = table[i].cells;
+                for(x=0;x<tr.length;x++){
+                    if(tr[x].innerHTML.length>0)
+                        arr[i][x]=tr[x].innerHTML;
+                }
+            }
+            if(count>=5){
+                if(checkWinner()==="X"){
+                    xP+=1;
+                    alert ("player "+checkWinner()+" win");
+                    clear();
+                }
+                else if(checkWinner()==="O"){
+                    oP+=1;
+                    alert ("player "+checkWinner()+" win");
+                    clear();
+                }
+                else if(checkWinner()==="D"){
+                    alert ("draw");
+                    clear();
+
+                }
+            }
+        }
+
+        function checkWinner(){
+            for(i = 0 ; i<3; i++){
+                if(arr[0][i]==arr[1][i] && arr[1][i]==arr[2][i] && arr[0][i]!=''){
+                    return arr[0][i];
+                }
+           
+                else if(arr[i][0]==arr[i][1] && arr[i][1]==arr[i][2] && arr[i][0]!=''){
+                    return arr[i][0];
+                } 
+            }
+            if (arr[0][0] === arr[1][1] && arr[1][1] === arr[2][2] && arr[0][0] !== '') {
+                return arr[0][0];
+            }
+            else if (arr[0][2] === arr[1][1] && arr[1][1] === arr[2][0] && arr[0][2] !== '') {
+                return arr[0][2];
+            }
+            else if(count==9){
+                return "D";
+            }
+            return null;
+        }
+        function clear(){
+            for (let i = 0; i < table.length; i++) {
+                let tr = table[i].cells;
+                for (let x = 0; x < tr.length; x++) {
+                    tr[x].innerHTML = "";
+                }
+            }
+            arr = [
+                ['', '', ''],
+                ['', '', ''],
+                ['', '', '']
+            ];
+            count = 0;
+        }
+        function resetScore(){
+            xP = 0;
+            oP = 0;
+        }
+        function switchTeam(){
+            temp = xP;
+            xP = oP;
+            oP = temp;
+        }
+
+    </script>
+
+</body>
+</html>
